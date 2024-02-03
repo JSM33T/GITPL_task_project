@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css">
+  <!-- Additional CSS and other head elements as needed -->
+</head>
+<body>
+  <!-- Your page content goes here -->
+ <div class="image-container">
+    <a href="https://via.placeholder.com/800x600" data-lg-size="800x600">
+      <img src="https://via.placeholder.com/150" alt="Image 1">
+    </a>
+    <a href="https://via.placeholder.com/1200x900" data-lg-size="1200x900">
+      <img src="https://via.placeholder.com/150" alt="Image 2">
+    </a>
+    <!-- Add more images as needed -->
+  </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.0.0-beta.3/lightgallery.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lg-zoom/1.3.0/lg-zoom.min.js" integrity="sha512-gYZM0XVEGQBwwqTrHxB3Qc1pmJ6huBfAZyMZtRpHzfs2BSxv/AGzzUaFhQwWtWQf/Qf+/bXP4xr4HIoVzJTV0w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lg-thumbnail/1.2.1/lg-thumbnail.min.js" integrity="sha512-IwXJ9hfJX95JVsCjHrWJ6/EBoyTZdEJxGTNX2H9wKinWDnWsP23cmtxBTjQiuwuPqi2xIvXO43wayj4MvjrAwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  <!-- Additional scripts and body content as needed -->
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Assuming your images are inside a container with class "image-container"
+      lightGallery(document.querySelector('.image-container'), {
+        selector: 'a',
+        counter: false,
+        download: false,
+        zoom: true,
+        thumbnail: true,
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        td {
+            padding: 10px 20px;
+        }
+        th {
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="jumbotron text-center">
+        <h2>GITPL Task</h2>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>All clients</h3>
+                <span id="clientList"></span>
+            </div>
+            <div class="col-sm-8">
+                <h3>Details</h3>
+                <span id="details"></span>
+               
+            </div>
+
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            var clientId = getParameterByName('id');
+            if (clientId !== null) {
+                console.log(clientId)
+                axios.get("/api/clients/" + clientId)
+                    .then(function (response) {
+                        var client = response.data;
+
+                        var tableHtml = "<table>";
+                        tableHtml += "<tr><th>ID</th><th>Client Name</th><th>Project</th><th>Cost</th></tr>";
+                        tableHtml += "<tr>";
+                        tableHtml += "<td>" + client.clientID + "</td>";
+                        tableHtml += "<td>" + client.clientName + "</td>&nbsp;&nbsp;";
+                        tableHtml += "<td>" + client.project + "</td>&nbsp;&nbsp;";
+                        tableHtml += "<td>" + client.cost + "</td>&nbsp;&nbsp;";
+                        tableHtml += "</tr>";
+                        tableHtml += "</table>";
+
+                        document.getElementById("details").innerHTML = tableHtml;
+                    })
+                    .catch(function (error) {
+                        console.error("Error fetching client details:", error);
+                    });
+                      
+            }
+
+
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+
+            axios.get("/api/clients")
+                .then(function (response) {
+                    document.getElementById("clientList").innerHTML = "";
+                    var clientsHtml = response.data.map(function (client) {
+                        var clientHtml = "<table><th>";
+                        clientHtml += "<td><a href=\"?" + client.clientID + "\">" + client.clientID + "</li></a>&nbsp;";
+                        clientHtml += "<td><a href=\"?" + client.clientID + "\">" + client.clientName + "</a></li>";
+                        clientHtml += "</th></table>";
+
+                        return clientHtml;
+                    }).join(""); 
+
+                    document.getElementById("clientList").innerHTML = clientsHtml;
+                    // Attach event listener to each client element
+                    var clientLinks = document.querySelectorAll("#clientList a");
+                    clientLinks.forEach(function (link) {
+                        link.addEventListener("click", function (event) {
+                            event.preventDefault(); // Prevent the default link behavior
+                            var queryString = link.getAttribute("href").split("?")[1]; // Extract the query string
+                            // You can use the queryString for further processing
+                            console.log("Query string:", queryString);
+                            var newUrl = window.location.origin + "/index.html?id=" + queryString;
+                            window.location.href = newUrl;
+                        });
+                    });
+                })
+                .catch(function (error) {
+                    console.error("Error fetching clients:", error);
+                });
+        });
+    </script>
+</body>
+</html>

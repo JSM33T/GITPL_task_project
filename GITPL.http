@@ -1,0 +1,6 @@
+@GITPL_HostAddress = http://localhost:5155
+
+GET {{GITPL_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
